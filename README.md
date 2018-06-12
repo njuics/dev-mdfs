@@ -1,1 +1,1 @@
-# A Microservice based Distributed File System
+# A distributed file system built with microservices
