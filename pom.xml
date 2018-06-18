@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.14.RELEASE</version>
+    </parent>
+
+    <groupId>info.nemoworks</groupId>
+    <artifactId>mdfs</artifactId>
+    <version>1.0.0</version>
+    <name>${project.artifactId}</name>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>mdfs-config-server</module>
+    </modules>
+
+    <properties>
+        <assertj.version>3.10.0</assertj.version>
+        <spring-cloud.version>Edgware.SR3</spring-cloud.version>
+        <sleuth.version>1.3.3.RELEASE</sleuth.version>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-sleuth-dependencies</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
+                <version>${sleuth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>springboot</id>
+            <activation>
+                <file>
+                    <!-- Just a way to identify a Spring Boot application -->
+                    <exists>src/main/resources/bootstrap.yml</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <fork>true</fork>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present -->
+                                <goals>
+                                    <goal>build-info</goal>
+                                </goals>
+                                <configuration>
+                                    <additionalProperties>
+                                        <encoding.source>${project.build.sourceEncoding}</encoding.source>
+                                        <encoding.reporting>${project.reporting.outputEncoding}</encoding.reporting>
+                                        <java.source>${maven.compiler.source}</java.source>
+                                        <java.target>${maven.compiler.target}</java.target>
+                                    </additionalProperties>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- Spring Boot Actuator displays build-related information if a META-INF/build-info.properties file is present -->
+                    <plugin>
+                        <groupId>pl.project13.maven</groupId>
+                        <artifactId>git-commit-id-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>revision</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <dateFormat>yyyy-MM-dd'T'HH:mm:ssZ</dateFormat>
+                            <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                            <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                            </generateGitPropertiesFilename>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+    </profiles>
+
+</project>
