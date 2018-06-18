@@ -3,14 +3,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>info.nemoworks</groupId>
+	<groupId>info.nemoworks.mdfs.config</groupId>
 	<artifactId>mdfs-config-server</artifactId>
 	<packaging>jar</packaging>
 	<description>MDFS Config Server</description>
 
     <parent>
-        <groupId>info.nemoworks</groupId>
-        <artifactId>mdfs</artifactId>
+        <groupId>info.nemoworks.mdfs</groupId>
+        <artifactId>mdfs-system</artifactId>
         <version>1.0.0</version>
     </parent>
 
